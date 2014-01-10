@@ -1,0 +1,48 @@
+drop table tcn_memo_cost;
+create table tcn_memo_cost (
+   tcn_memo_cost_id     NUMERIC(10)          not null,
+   tcn_memo_id          NUMERIC(10)          null,
+   tcn_cost_element_id  NUMERIC(10)          null,
+   c_currency_id        NUMERIC(10)          null,
+   exchange_rate        NUMERIC(20,7)        null,
+   amount_tax_originalc NUMERIC(22,2)        null,
+   tcn_vat_id           NUMERIC(10)          null,
+   isdeductible         CHAR(1)              null,
+   amount_notax_oc      NUMERIC(22,2)        null,
+   amount_tax_rmb       NUMERIC(22,2)        null,
+   amount_notax_rmb     NUMERIC(22,2)        null,
+   receiver_bpartner_id NUMERIC(10)          null,
+   ad_client_id         NUMERIC(10)           not null,
+   ad_org_id            NUMERIC(10)           not null,
+   isactive             Char(1)              null default 'Y',
+   created              TIMESTAMP            not null,
+   createdby            NUMERIC(10)           not null,
+   updated              TIMESTAMP            not null,
+   updatedby            NUMERIC(10)           not null,
+   constraint PK_TCN_MEMO_COST primary key (tcn_memo_cost_id)
+);
+
+alter table tcn_memo_cost
+   add constraint FK_TCN_MEMO_REFERENCE_C_CURREN foreign key (c_currency_id)
+      references c_currency (c_currency_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo_cost
+   add constraint FK_TCN_MEMO_REFERENCE_C_TAX foreign key (tcn_vat_id)
+      references c_tax (c_tax_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo_cost
+   add constraint FK_TCN_MEMO_REFERENCE_TCN_COST foreign key (tcn_cost_element_id)
+      references tcn_cost_element (tcn_cost_element_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo_cost
+   add constraint FK_TCN_MEMO_REFERENCE_TCN_MEMO foreign key (tcn_memo_id)
+      references tcn_memo (tcn_memo_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo_cost
+   add constraint FK_TCN_MEMO_TCN_MEMO__C_BPARTN foreign key (receiver_bpartner_id)
+      references c_bpartner (c_bpartner_id)
+      on delete restrict on update restrict;

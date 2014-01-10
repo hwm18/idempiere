@@ -1,0 +1,45 @@
+
+create table tcn_memo_benefit (
+   tcn_memo_benefit_id  NUMERIC(10)          not null,
+   tcn_memo_id          NUMERIC(10)          not null,
+   product_total_qty    NUMERIC(22,2)        null,
+   so_amt_notax_oc      NUMERIC(22,2)        null,
+   so_amt_notax_rmb     NUMERIC(22,2)        null,
+   so_tax_rate          NUMERIC(22,2)        null,
+   so_vat               NUMERIC(22,2)        null,	
+   so_amt_tax_rmb       NUMERIC(22,2)        null,
+   po_amt_notax_oc      NUMERIC(22,2)        null,
+   po_amt_notax_rmb     NUMERIC(22,2)        null,
+   po_tax_rate          NUMERIC(22,2)        null,
+   po_vat               NUMERIC(22,2)        null,
+   po_amt_tax_rmb       NUMERIC(22,2)        null,
+   costa                NUMERIC(22,2)        null,
+   costb                NUMERIC(22,2)        null,
+   exp_nodrawback_amount_c NUMERIC(22,2)        null,
+   cost_amt_abc         NUMERIC(22,2)        null,
+   so_debt_period       NUMERIC(22,2)        null,
+   so_debt_interest     NUMERIC(22,2)        null,
+   po_debt_period       NUMERIC(22,2)        null,
+   po_debt_interest     NUMERIC(22,2)        null,
+   total_amount1        NUMERIC(22,2)        null,
+   gross_margin1        NUMERIC(22,2)        null,
+   total_amount2        NUMERIC(22,2)        null,
+   gross_margin2        NUMERIC(22,2)        null,
+   total_amount3        NUMERIC(22,2)        null,
+   gross_margin3        NUMERIC(22,2)        null,
+   ad_client_id         NUMERIC(10)           not null,
+   ad_org_id            NUMERIC(10)           not null,
+   isactive             Char(1)              null default 'Y',
+   created              TIMESTAMP            not null,
+   createdby            NUMERIC(10)           not null,
+   updated              TIMESTAMP            not null,
+   updatedby            NUMERIC(10)           not null,
+   constraint PK_TCN_MEMO_BENEFIT primary key (tcn_memo_benefit_id),
+   constraint AK_UQ_TCN_MEMO_ID_TCN_MEMO unique (tcn_memo_id)
+);
+
+alter table tcn_memo_benefit
+   add constraint FK_TCN_MEMO_REFERENCE_TCN_MEMO foreign key (tcn_memo_id)
+      references tcn_memo (tcn_memo_id)
+      on delete restrict on update restrict;
+

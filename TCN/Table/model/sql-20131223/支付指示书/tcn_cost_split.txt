@@ -1,0 +1,50 @@
+create table tcn_cost_split (
+   tcn_cost_split_id    NUMERIC(10)              not null,
+   documnetno           VARCHAR(20)          null,
+   tcn_section_code_id  NUMERIC(10)          null,
+   docstatus            CHAR(2)              null,
+   tcn_cost_element_id  NUMERIC(10)          null,
+   allocation           VARCHAR(30)          null,
+   receipt_code         VARCHAR(30)          null,
+   receipt_name         VARCHAR(30)          null,
+   amount_tax           NUMERIC(22,2)        null,
+   tcn_tax_rate_id      NUMERIC(10)          null,
+   amount_notax         NUMERIC(22,2)        null,
+   tax_amount           NUMERIC(22,2)        null,
+   isdeductible         CHAR(1)              null,
+   account_date         TIMESTAMP            null,
+   c_currency_id        NUMERIC(10)          null,
+   voucher_no           VARCHAR(20)          null,
+   rate                 NUMERIC(16,7)        null,
+   comment              TEXT                 null,
+   cal_cost             CHAR(1)              null,
+   gen_payment_instruction CHAR(1)              null,
+   ad_client_id         NUMERIC(10)           not null,
+   ad_org_id            NUMERIC(10)           not null,
+   isactive             Char(1)              null default 'Y',
+   created              TIMESTAMP            not null,
+   createdby            NUMERIC(10)           not null,
+   updated              TIMESTAMP            not null,
+   updatedby            NUMERIC(10)           not null,
+   constraint PK_TCN_COST_SPLIT primary key (tcn_cost_split_id)
+);
+
+alter table tcn_cost_split
+   add constraint FK_TCN_COST_REFERENCE_C_CURREN foreign key (c_currency_id)
+      references c_currency (c_currency_id)
+      on delete restrict on update restrict;
+
+alter table tcn_cost_split
+   add constraint FK_TCN_COST_REFERENCE_TCN_SECT foreign key (tcn_section_code_id)
+      references tcn_section_code (tcn_section_code_id)
+      on delete restrict on update restrict;
+
+alter table tcn_cost_split
+   add constraint FK_TCN_COST_REFERENCE_TCN_COST foreign key (tcn_cost_element_id)
+      references tcn_cost_element (tcn_cost_element_id)
+      on delete restrict on update restrict;
+
+alter table tcn_cost_split
+   add constraint FK_TCN_COST_REFERENCE_C_TAX foreign key (tcn_tax_rate_id)
+      references c_tax (c_tax_id)
+      on delete restrict on update restrict;

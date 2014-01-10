@@ -1,0 +1,20 @@
+create table tcn_credit_master_temp (
+   tcn_credit_master_temp_id NUMERIC(10)          not null,
+   vendor_code          VARCHAR(12)          null,
+   relationship_type    VARCHAR(4)           null,
+   limit_type           VARCHAR(4)           null,
+   currency             VARCHAR(4)           null,
+   date_from            TIMESTAMP            null,
+   date_to              TIMESTAMP            null,
+   limit_amount         NUMERIC(14)          null,
+   credit_class         VARCHAR(4)           null,
+   delflg               VARCHAR(1)                 null,
+   ad_client_id         NUMERIC(10)           not null,
+   ad_org_id            NUMERIC(10)           not null,
+   isactive             Char(1)              null default 'Y',
+   created              TIMESTAMP            not null,
+   createdby            NUMERIC(10)           not null,
+   updated              TIMESTAMP            not null,
+   updatedby            NUMERIC(10)           not null,
+   constraint PK_TCN_CREDIT_MASTER_TEMP primary key (tcn_credit_master_temp_id)
+);

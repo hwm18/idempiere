@@ -1,0 +1,63 @@
+
+create table tcn_memo_line (
+   tcn_memo_line_id     NUMERIC(10)          not null,
+   tcn_memo_id          NUMERIC(10)          null,
+   style_no             VARCHAR(15)          null,
+   m_product_id         NUMERIC(10)          null,
+   quantity             NUMERIC(20,2)        null,
+   po_price_notax_oc    NUMERIC(20,2)        null,
+   receipt_date         TIMESTAMP            null,
+   po_contract          VARCHAR(20)          null,
+   po_contract_date     TIMESTAMP            null,
+   payment_term         VARCHAR(50)          null,
+   po_paymentterm_id    NUMERIC(10)          null,
+   po_start_date        TIMESTAMP            null,
+   po_days              NUMERIC(10,2)        null,
+   po_price_tax_oc      NUMERIC(22,2)        null,
+   po_amt_notax_oc      NUMERIC(22,2)        null,
+   po_amt_notax_rmb     NUMERIC(22,2)        null,
+   po_amt_tax_rmb       NUMERIC(22,2)        null,
+   so_price_notax_oc    NUMERIC(22,2)        null,
+   deliver_date         TIMESTAMP            null,
+   so_contract          VARCHAR(20)          null,
+   so_contract_date     TIMESTAMP            null,
+   receipt_term         VARCHAR(50)          null,
+   so_paymentterm_id    NUMERIC(10)          null,
+   so_start_date        TIMESTAMP            null,
+   so_days              NUMERIC(10,2)        null,
+   so_price_tax_oc      NUMERIC(22,2)        null,
+   so_amt_notax_oc      NUMERIC(22,2)        null,
+   so_amt_notax_rmb     NUMERIC(22,2)        null,
+   so_amt_tax_rmb       NUMERIC(22,2)        null,
+   iscompleted          CHAR(1)              null,
+   prepay_amt           NUMERIC(22,2)        null,
+   prereceipt_amt       NUMERIC(22,2)        null,
+   ad_client_id         NUMERIC(10)           not null,
+   ad_org_id            NUMERIC(10)           not null,
+   isactive             Char(1)              null default 'Y',
+   created              TIMESTAMP            not null,
+   createdby            NUMERIC(10)           not null,
+   updated              TIMESTAMP            not null,
+   updatedby            NUMERIC(10)           not null,
+   constraint PK_TCN_MEMO_LINE primary key (tcn_memo_line_id)
+);
+
+alter table tcn_memo_line
+   add constraint FK_TCN_MEMO_REFERENCE_M_PRODUC foreign key (m_product_id)
+      references m_product (m_product_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo_line
+   add constraint FK_TCN_MEMO_REFERENCE_TCN_MEMO foreign key (tcn_memo_id)
+      references tcn_memo (tcn_memo_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo_line
+   add constraint FK_TCN_MEMO_MEMO_LINE_C_PAYMEN_SO foreign key (po_paymentterm_id)
+      references c_paymentterm (c_paymentterm_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo_line
+   add constraint FK_TCN_MEMO_MEMO_LINE_C_PAYMEN_PO foreign key (so_paymentterm_id)
+      references c_paymentterm (c_paymentterm_id)
+      on delete restrict on update restrict;

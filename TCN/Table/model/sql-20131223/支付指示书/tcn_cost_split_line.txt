@@ -1,0 +1,43 @@
+create table tcn_cost_split_line (
+   tcn_cost_split_line_id NUMERIC(10)              not null,
+   tcn_payment_instruction_id NUMERIC(10)              null,
+   tcn_memo_id          NUMERIC(10)          null,
+   docstatus            CHAR(2)              null,
+   gbs_po               VARCHAR(20)          null,
+   memo_amount          NUMERIC(22,2)        null,
+   memo_qty             NUMERIC(20,2)        null,
+   actual_amount        NUMERIC(22,2)        null,
+   actual_qty           NUMERIC(20,2)        null,
+   accrued_expense_originalc NUMERIC(22,2)        null,
+   temp_pay_amount      NUMERIC(22,2)        null,
+   accrued_expense_notax NUMERIC(22,2)        null,
+   accrued_expense_tax  NUMERIC(22,2)        null,
+   temp_pay_amount_tax  NUMERIC(22,2)        null,
+   accrued_expense_amount_tax NUMERIC(22,2)        null,
+   total_tax            NUMERIC(22,2)        null,
+   c_bpartner_id        NUMERIC(10)          null,
+   ad_client_id         NUMERIC(10)           not null,
+   ad_org_id            NUMERIC(10)           not null,
+   isactive             Char(1)              null default 'Y',
+   created              TIMESTAMP            not null,
+   createdby            NUMERIC(10)           not null,
+   updated              TIMESTAMP            not null,
+   updatedby            NUMERIC(10)           not null,
+   constraint PK_TCN_COST_SPLIT_LINE primary key (tcn_cost_split_line_id)
+);
+
+alter table tcn_cost_split_line
+   add constraint FK_TCN_COST_REFERENCE_TCN_COST foreign key (tcn_payment_instruction_id)
+      references tcn_cost_split (tcn_cost_split_id)
+      on delete restrict on update restrict;
+
+alter table tcn_cost_split_line
+   add constraint FK_TCN_COST_REFERENCE_C_BPARTN foreign key (c_bpartner_id)
+      references c_bpartner (c_bpartner_id)
+      on delete restrict on update restrict;
+
+alter table tcn_cost_split_line
+   add constraint FK_TCN_COST_REFERENCE_TCN_MEMO foreign key (tcn_memo_id)
+      references tcn_memo (tcn_memo_id)
+      on delete restrict on update restrict;
+

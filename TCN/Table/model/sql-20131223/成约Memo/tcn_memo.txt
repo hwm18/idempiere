@@ -1,0 +1,140 @@
+create table tcn_memo (
+   tcn_memo_id          NUMERIC(10)          not null,
+   memo_number          VARCHAR(10)          null,
+   memo_date            TIMESTAMP            null,
+   docstatus            CHAR(2)              not null,
+   trade_type           VARCHAR(60)          null,
+   input_type           VARCHAR(60)          null,
+   inexport_type        VARCHAR(60)          null,
+   business_bype        VARCHAR(60)          null,
+   produce_name         VARCHAR(50)          null,
+   hq_department        VARCHAR(50)          null,
+   tcn_section_code_id  NUMERIC(10)          null,
+   tcn_store_place_id   NUMERIC(10)          null,
+   gbs_so               VARCHAR(20)          null,
+   gbs_po               VARCHAR(20)          null,
+   creator_bpartner_id  NUMERIC(10)          null,
+   created              TIMESTAMP            null,
+   customer_bpartner_id NUMERIC(10)          null,
+   so_contract          VARCHAR(20)          null,
+   so_contract_date     TIMESTAMP            null,
+   deliver_date         TIMESTAMP            null,
+   deliver_address      VARCHAR(255)         null,
+   so_trade_term_id     NUMERIC(10)          null,
+   destination_port     VARCHAR(50)          null,
+   exp_country_id       NUMERIC(10)          null,
+   receipt_term         VARCHAR(50)          null,
+   so_paymentterm_id    NUMERIC(10)          null,
+   so_start_date        TIMESTAMP            null,
+   so_days              NUMERIC(10,2)        null,
+   acct_rcv_date        TIMESTAMP            null,
+   so_currency_id       NUMERIC(10)          null,
+   so_imprest_rate      NUMERIC(20,7)        null,
+   so_rate              NUMERIC(20,7)        null,
+   so_vat_id            NUMERIC(10)          null,
+   prereceipt_percent   NUMERIC(20,7)        null,
+   vendor_bpartner_id   NUMERIC(10)          null,
+   po_contract          VARCHAR(20)          null,
+   po_contract_date     TIMESTAMP            null,
+   receipt_date         TIMESTAMP            null,
+   receipt_address      CHAR(255)            null,
+   po_trade_term_id     NUMERIC(10)          null,
+   source_port          VARCHAR(50)          null,
+   imp_country_id       NUMERIC(10)          null,
+   payment_term         VARCHAR(50)          null,
+   po_paymentterm_id    NUMERIC(10)          null,
+   po_start_date        TIMESTAMP            null,
+   po_days              NUMERIC(10,2)        null,
+   acct_pay_date        TIMESTAMP            null,
+   po_currency_id       NUMERIC(10)          null,
+   po_imprest_rate      NUMERIC(20,7)        null,
+   po_rate              NUMERIC(20,7)        null,
+   po_vat_id            NUMERIC(10)          null,
+   prepay_percent       NUMERIC(20,7)        null,
+   rebate_tax           NUMERIC(12,7)        null,
+   ad_client_id         NUMERIC(10)           not null,
+   ad_org_id            NUMERIC(10)           not null,
+   isactive             Char(1)              null default 'Y',
+   created2             TIMESTAMP            not null,
+   createdby            NUMERIC(10)           not null,
+   updated              TIMESTAMP            not null,
+   updatedby            NUMERIC(10)           not null,
+   constraint PK_TCN_MEMO primary key (tcn_memo_id)
+);
+
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_REFERENCE_TCN_SECT foreign key (tcn_section_code_id)
+      references tcn_section_code (tcn_section_code_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_REFERENCE_TCN_STOC foreign key (tcn_store_place_id)
+      references tcn_stock_house (tcn_stock_house_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_CREA_C_BPARTN foreign key (creator_bpartner_id)
+      references c_bpartner (c_bpartner_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_CUST_C_BPARTN foreign key (customer_bpartner_id)
+      references c_bpartner (c_bpartner_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_EXP__C_COUNTR foreign key (exp_country_id)
+      references c_country (c_country_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_IMP__C_COUNTR foreign key (imp_country_id)
+      references c_country (c_country_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_PO_C_C_CURREN foreign key (po_currency_id)
+      references c_currency (c_currency_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_PO_P_C_PAYMEN foreign key (po_paymentterm_id)
+      references c_paymentterm (c_paymentterm_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_PO_T_TCN_TRAD foreign key (po_trade_term_id)
+      references tcn_trade_term (tcn_trade_term_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_PO_V_C_TAX foreign key (po_vat_id)
+      references c_tax (c_tax_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_SO_C_C_CURREN foreign key (so_currency_id)
+      references c_currency (c_currency_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_SO_P_C_PAYMEN foreign key (so_paymentterm_id)
+      references c_paymentterm (c_paymentterm_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_SO_T_TCN_TRAD foreign key (so_trade_term_id)
+      references tcn_trade_term (tcn_trade_term_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_SO_V_C_TAX foreign key (so_vat_id)
+      references c_tax (c_tax_id)
+      on delete restrict on update restrict;
+
+alter table tcn_memo
+   add constraint FK_TCN_MEMO_MEMO_VEND_C_BPARTN foreign key (vendor_bpartner_id)
+      references c_bpartner (c_bpartner_id)
+      on delete restrict on update restrict;
+

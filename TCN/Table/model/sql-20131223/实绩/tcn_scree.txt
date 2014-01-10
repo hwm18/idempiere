@@ -1,0 +1,16 @@
+create table tcn_scree (
+   tcn_scree_id         NUMERIC(10)          not null,
+   memo_number          VARCHAR(10)          null,
+   gbs_so               VARCHAR(20)          null,
+   gbs_po               VARCHAR(20)          null,
+   type                 VARCHAR(6)           null,
+   create_user          VARCHAR(10)          null,
+   ad_client_id         NUMERIC(10)           not null,
+   ad_org_id            NUMERIC(10)           not null,
+   isactive             Char(1)              null default 'Y',
+   created              TIMESTAMP            not null,
+   createdby            NUMERIC(10)           not null,
+   updated              TIMESTAMP            not null,
+   updatedby            NUMERIC(10)           not null,
+   constraint PK_TCN_SCREE primary key (tcn_scree_id)
+);
